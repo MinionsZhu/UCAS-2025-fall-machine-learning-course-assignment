@@ -1,8 +1,10 @@
 */
 !/fig/
+!/codes/
 *.csv
 *.tsv
 *.pdf
 *.zip
+*/visual.py
 
 

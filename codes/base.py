@@ -15,7 +15,7 @@ import os
 # ==========================================
 CONFIG = {
     'max_features': 30000,  # 词表大小
-    'ngram_range': (1, 2),  # 关键：使用Bigram捕捉 "not good" 等反转语义
+    'ngram_range': (1, 2),  # 关键: 使用Bigram捕捉 "not good" 等反转语义
     'hidden_dim': 512,  # Wide MLP: 宽隐藏层
     'dropout': 0.5,  # 强正则化
     'batch_size': 64,
@@ -114,10 +114,10 @@ class WideMLP(nn.Module):
     def __init__(self, input_dim, hidden_dim, num_classes):
         super(WideMLP, self).__init__()
 
-        # 结构：Input -> 2*(Linear -> BatchNorm -> ReLU -> Dropout) -> Linear -> Output
+        # 结构: Input -> 2*(Linear -> BatchNorm -> ReLU -> Dropout) -> Linear -> Output
         self.layers = nn.Sequential(
             nn.Linear(input_dim, hidden_dim),
-            nn.BatchNorm1d(hidden_dim),  # 现代MLP标配，加速收敛
+            nn.BatchNorm1d(hidden_dim),
             nn.ReLU(),
             nn.Dropout(CONFIG['dropout']),
             nn.Linear(hidden_dim, hidden_dim // 2),  # 额外加一层以增强非线性能力
@@ -213,8 +213,8 @@ def generate_submission(model, test_tensor, phrase_ids):
 if __name__ == "__main__":
     # 检查文件是否存在
     if not os.path.exists('train.tsv') or not os.path.exists('test.tsv'):
-        print("错误: 当前目录下未找到 train.tsv 或 test.tsv。")
-        print("请下载 Rotten Tomatoes 数据集并放置在当前目录。")
+        print("错误: 当前目录下未找到 train.tsv 或 test.tsv.")
+        print("请下载 Rotten Tomatoes 数据集并放置在当前目录.")
     else:
         # 1. 加载数据
         train_ds, val_ds, test_tensor, test_ids = load_and_process_data()
